@@ -1,0 +1,209 @@
+:root {
+  font-family: "JetBrains Mono", Consolas, monospace;
+
+  --background-color: #1e1f22;
+  --text-color: #ededf2;
+  --secondary-text-color: #c7c7cc;
+
+  --button-color-top: #3a3b3f;
+  --button-color-middle: #2f3034;
+  --button-color-bottom: #25262a;
+  --button-border-color: #111216;
+  --active-border-color: #ededf2;
+
+  --desktop-border-color: #35363a;
+
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+:root[data-theme="light"] {
+  --background-color: #d6d0c2;
+  --text-color: #1e1f22;
+  --secondary-text-color: #454545;
+
+  --button-color-top: #f0ece3;
+  --button-color-middle: #e7e1d6;
+  --button-color-bottom: #dcd4c6;
+  --button-border-color: #9e9485;
+  --active-border-color: #0078d4;
+
+  --desktop-border-color: #b5aa99;
+}
+
+* {
+  box-sizing:border-box;
+}
+
+html,
+body,
+#app {
+  width: 100%;
+  min-height: 100%;
+  margin:0;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden; /* horizontales Verschieben verhindern */
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+button {
+  font: inherit;
+}
+
+.main-menu {
+  width: 100%;
+  max-width: 600px; /* Maximal Breite auf großen Bildschirmen begrenzen */
+  min-height: 100vh;
+  margin: 0 auto; /* App horizontal zentrieren */
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-color);
+}
+
+.app-header {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.version-label {
+  font-size: 0.85rem;
+  color: var(--text-color);
+}
+
+.title-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.title-section h1 {
+  margin: 0;
+  font-size: clamp(2rem, 9vw, 3.5rem); /* Titelgröße flexibel an Bildschirmbreite anpassen */
+  line-height: 1.2;
+}
+
+.title-section p {
+  margin: 32px auto 0;
+  max-width: 500px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  line-height: 1.6;
+}
+
+.menu-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 48px;
+}
+
+.menu-button,
+.toggle-button,
+.navigation-button {
+  color: var(--text-color);
+  background: linear-gradient(
+    to bottom,
+    var(--button-color-top),
+    var(--button-color-middle),
+    var(--button-color-bottom)
+  );
+  border: 2px solid var(--button-border-color);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.menu-button:active:not(:disabled),
+.toggle-button:active:not(:disabled),
+.navigation-button:active:not(:disabled) {
+  background: linear-gradient(
+    to bottom,
+    var(--button-color-bottom),
+    var(--button-color-middle),
+    var(--button-color-top)
+  );
+}
+
+.menu-button {
+  width: 100%;
+  min-height: 52px;
+  padding: 10px 16px;
+}
+
+.menu-button:hover:not(:disabled) {
+  border-color: var(--active-border-color);
+}
+
+.menu-button:disabled,
+.toggle-button:disabled,
+.navigation-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 16px;
+}
+
+.toggle-group {
+  width: min(100%, 260px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.toggle-button {
+  min-height: 34px;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+}
+
+.toggle-button:first-child {
+  border-radius: 4px 0 0 4px;
+}
+
+.toggle-button:last-child {
+  border-radius: 0 4px 4px 0;
+}
+
+.toggle-button.active {
+  border-color: var(--active-border-color);
+}
+
+.navigation-section {
+  display: flex;
+  justify-content: center;
+  padding-top: 32px;
+  padding-bottom: 8px;
+}
+
+.navigation-button {
+  width: 160px;
+  min-height: 56px;
+  padding: 10px 16px;
+}
+
+@media (min-width: 701px) {
+  .main-menu {
+    min-height: 100vh;
+    border-left: 1px solid var(--desktop-border-color);
+    border-right: 1px solid var(--desktop-border-color);
+  }
+
+  .handedness-toggle {
+    visibility: hidden; /* Auf breiten Bildschirmen ausblenden aber Position weiterhin belegen */
+  }
+}
