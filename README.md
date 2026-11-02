@@ -4,6 +4,12 @@ Plattformunabhängige Weiterentwicklung des Fachinformatiker Lernbegleiters als 
 
 Die Anwendung soll vorhandene Lernfragen aus den Java-basierten Desktop- und Android-Versionen übernehmen und eine responsive, installierbare sowie offlinefähige Nutzung ermöglichen.
 
+## Live-Demo
+
+Der aktuelle Entwicklungsstand ist über GitHub Pages erreichbar:
+
+https://devake86.github.io/Fachinformatiker-Lernbegleiter-pwa/
+
 ## Aktueller Stand
 
 Früher Prototyp:
@@ -25,10 +31,10 @@ Früher Prototyp:
 
 ## Technologien
 
-- HTML
-- CSS
 - Vanilla TypeScript
 - Vite
+- HTML
+- CSS
 
 ## Entwicklungsstand
 
