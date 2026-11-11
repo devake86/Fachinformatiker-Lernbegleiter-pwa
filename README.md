@@ -12,16 +12,29 @@ https://devake86.github.io/Fachinformatiker-Lernbegleiter-pwa/
 
 ## Aktueller Stand
 
-Früher Prototyp:
+### v0.2-dev
 
-- Hauptmenü als responsive Browseransicht
-- helles und dunkles Farbschema
-- lokale Speicherung des ausgewählten Farbschemas
-- vorbereitete Bedienelemente für weitere Funktionen
+Funktionsfähige Menüführung und Inhaltsauswahl.
+
+- **M2:** Navigation zwischen Hauptmenü, Lernfeldauswahl und Fragenkategorieauswahl
+- zentrale Verwaltung der verfügbaren Lernfelder und Kategorien
+- dynamische Anzeige der zum jeweiligen Lernfeld gehörenden Fragenkategorien
+- responsive Darstellung in hellem und dunklem Farbschema
+
+### v0.1-prototype
+
+Früher Prototyp der Benutzeroberfläche und Projektgrundlage.
+
+- **M1:** Einrichtung des Vite-/TypeScript-Projekts
+- responsive Hauptmenüansicht
+- persistente Hell-/Dunkelumschaltung
+- Git-Versionsverwaltung
+- automatischer Build und Bereitstellung über GitHub Pages
 
 ## Geplante Funktionen
 
-- Auswahl von Lernfeldern und Fragenkategorien
+- zentrale Zuordnung der JSON-Fragendateien
+- Laden und Validieren der vorhandenen Fragen
 - gemischte Quizrunden
 - lokale Speicherung des Lernfortschritts
 - Wiederholung falsch beantworteter Fragen

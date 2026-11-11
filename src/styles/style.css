@@ -57,7 +57,8 @@ button {
   font: inherit;
 }
 
-.main-menu {
+.main-menu,
+.content-view {
   width: 100%;
   max-width: 600px; /* Maximal Breite auf großen Bildschirmen begrenzen */
   min-height: 100vh;
@@ -108,9 +109,17 @@ button {
   margin-bottom: 48px;
 }
 
+
+.menu-button {
+  width: 100%;
+  min-height: 52px;
+  padding: 10px 16px;
+}
+
 .menu-button,
 .toggle-button,
-.navigation-button {
+.navigation-button,
+.selection-button {
   color: var(--text-color);
   background: linear-gradient(
     to bottom,
@@ -125,7 +134,8 @@ button {
 
 .menu-button:active:not(:disabled),
 .toggle-button:active:not(:disabled),
-.navigation-button:active:not(:disabled) {
+.navigation-button:active:not(:disabled),
+.selection-button:active:not(:disabled) {
   background: linear-gradient(
     to bottom,
     var(--button-color-bottom),
@@ -134,21 +144,27 @@ button {
   );
 }
 
-.menu-button {
-  width: 100%;
-  min-height: 52px;
-  padding: 10px 16px;
-}
-
-.menu-button:hover:not(:disabled) {
+.menu-button:hover:not(:disabled),
+.toggle-button:hover:not(:disabled),
+.navigation-button:hover:not(:disabled),
+.selection-button:hover:not(:disabled) {
   border-color: var(--active-border-color);
 }
 
 .menu-button:disabled,
 .toggle-button:disabled,
-.navigation-button:disabled {
+.navigation-button:disabled,
+.selection-button:disabled {
   opacity: 0.45;
   cursor: not-allowed;
+}
+
+.menu-button:focus-visible,
+.toggle-button:focus-visible,
+.navigation-button:focus-visible,
+.selection-button:focus-visible {
+  outline: 2px solid var(--active-border-color);
+  outline-offset: 2px;
 }
 
 .settings-section {
@@ -196,8 +212,41 @@ button {
   padding: 10px 16px;
 }
 
+.content-header {
+  margin: 32px 0;
+  text-align: center;
+}
+
+.content-header h1 {
+  margin: 0;
+  font-size: clamp(1.7rem, 7vw, 2.6rem);
+  line-height: 1.2;
+}
+
+.content-header p {
+  margin: 24px auto 0;
+  max-width: 500px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  line-height: 1.6;
+}
+
+.selection-actions {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.selection-button {
+  width: 100%;
+  min-height: 52px;
+  padding: 10px 16px;
+}
+
 @media (min-width: 701px) {
-  .main-menu {
+  .main-menu,
+  .content-view {
     min-height: 100vh;
     border-left: 1px solid var(--desktop-border-color);
     border-right: 1px solid var(--desktop-border-color);

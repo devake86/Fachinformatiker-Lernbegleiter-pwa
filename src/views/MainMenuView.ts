@@ -4,10 +4,16 @@ export class MainMenuView {
 
     private readonly initialTheme: Theme;
     private readonly onThemeSelected: (theme: Theme) => void; // Callback-Funktion, die ein Theme entgegennimmt und keinen Wert zurückgibt
+    private readonly onLearningFieldSelectionRequested: () => void;
 
-    public constructor(initialTheme: Theme, onThemeSelected: (theme: Theme) => void) {
-        this.initialTheme = initialTheme;
-        this.onThemeSelected = onThemeSelected;
+    public constructor(
+        initialTheme: Theme,
+        onThemeSelected: (theme: Theme) => void,
+        onLearningFieldSelectionRequested: () => void
+        ) {
+            this.initialTheme = initialTheme;
+            this.onThemeSelected = onThemeSelected;
+            this.onLearningFieldSelectionRequested = onLearningFieldSelectionRequested;
     }
 
     public createElement(): HTMLElement {
@@ -18,7 +24,7 @@ export class MainMenuView {
         // Fügt dem erzeugten main-Element die Struktur des Hauptmenüs hinzu
         mainMenuElement.innerHTML = `
             <header class="app-header">
-                <span class="version-Label">v0.1.0-dev</span>
+                <span class="version-Label">v0.2.0-dev</span>
             </header>
             
             <section class="title-section">
@@ -31,7 +37,7 @@ export class MainMenuView {
             </section>
             
             <nav class="menu-actions" aria-label="Hauptmenü">
-                <button class="menu-button" type="button">
+                <button class="menu-button" type="button" data-action="open-learning-fields">
                     Lernfeld Auswahl
                 </button>
                 
@@ -74,6 +80,7 @@ export class MainMenuView {
         `;
 
         this.initializeThemeButtons(mainMenuElement);
+        this.initializeNavigation(mainMenuElement);
 
         return mainMenuElement;
     }
@@ -92,6 +99,16 @@ export class MainMenuView {
                 this.updateActiveThemeButton(themeButtons, buttonTheme);
             });
         });
+    }
+
+    private initializeNavigation(mainMenuElement: HTMLElement) {
+        const learningFieldButton = mainMenuElement.querySelector<HTMLButtonElement>('[data-action="open-learning-fields"]');
+
+        if (learningFieldButton === null) {
+            throw new Error('Der Button für die Lernfeldauswahl wurde nicht gefunden');
+        }
+
+        learningFieldButton.addEventListener('click', () => this.onLearningFieldSelectionRequested());
     }
 
     private updateActiveThemeButton(themeButtons: NodeListOf<HTMLButtonElement>, selectedTheme: Theme): void {
