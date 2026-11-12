@@ -12,6 +12,14 @@ https://devake86.github.io/Fachinformatiker-Lernbegleiter-pwa/
 
 ## Aktueller Stand
 
+### v0.3-dev
+
+Zentrale Verwaltung der vorhandenen Fragenbestände.
+
+- **M3:** Zuordnung der Lernfelder und Fragenkategorien zu den vorhandenen JSON-Fragendateien
+- zentrale Ablösung der mehrfach hinterlegten Dateilisten
+- überprüfbare Anzeige der zugeordneten Fragendateien
+
 ### v0.2-dev
 
 Funktionsfähige Menüführung und Inhaltsauswahl.
@@ -33,7 +41,6 @@ Früher Prototyp der Benutzeroberfläche und Projektgrundlage.
 
 ## Geplante Funktionen
 
-- zentrale Zuordnung der JSON-Fragendateien
 - Laden und Validieren der vorhandenen Fragen
 - gemischte Quizrunden
 - lokale Speicherung des Lernfortschritts

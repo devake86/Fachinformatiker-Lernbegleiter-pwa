@@ -2,7 +2,7 @@ import { MainMenuView } from '../views/MainMenuView.ts';
 import { LearningFieldView } from '../views/LearningFieldView.ts';
 import { QuestionCategoryView } from "../views/QuestionCategoryView.ts";
 import { SelectionSummaryView } from "../views/SelectionSummaryView.ts";
-import type { QuestionCategory } from "../models/QuestionCategory.ts";
+import type { QuestionSet } from "../models/QuestionSet.ts";
 import { LEARNING_FIELDS } from "../data/LearningFieldCatalog.ts";
 import type { LearningField } from "../models/LearningField.ts";
 import { ThemeService } from '../services/ThemeService.ts';
@@ -52,17 +52,17 @@ export class App {
     private showQuestionCategorySelection(learningField: LearningField): void {
         const questionCategoryView = new QuestionCategoryView(
             learningField,
-            (selectedQuestionCategory) => this.showSelectedSummary(learningField, selectedQuestionCategory),
+            (selectedQuestionSet) => this.showSelectedSummary(learningField, selectedQuestionSet),
             () => this.showLearningFieldSelection()
         );
 
         this.appContainer.replaceChildren(questionCategoryView.createElement());
     }
 
-    private showSelectedSummary(learningField: LearningField, questionCategory: QuestionCategory): void {
+    private showSelectedSummary(learningField: LearningField, questionSet: QuestionSet): void {
         const selectionSummaryView = new SelectionSummaryView(
             learningField,
-            questionCategory,
+            questionSet,
             () => this.showQuestionCategorySelection(learningField),
         );
 

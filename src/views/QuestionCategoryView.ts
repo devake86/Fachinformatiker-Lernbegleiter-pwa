@@ -1,18 +1,18 @@
 import type { LearningField } from "../models/LearningField.ts";
-import type { QuestionCategory } from "../models/QuestionCategory.ts";
+import type { QuestionSet } from "../models/QuestionSet.ts";
 
 export class QuestionCategoryView {
     private readonly learningField: LearningField;
-    private readonly onQuestionCategorySelected: (questionCategory: QuestionCategory) => void;
+    private readonly onQuestionSetSelected: (questionSet: QuestionSet) => void;
     private readonly onBackRequested: () => void;
 
     public constructor(
         learningField: LearningField,
-        onQuestionCategorySelected: (questionCategory: QuestionCategory) => void,
+        onQuestionSetSelected: (questionSet: QuestionSet) => void,
         onBackRequested: () => void
         ) {
             this.learningField = learningField;
-            this.onQuestionCategorySelected = onQuestionCategorySelected;
+            this.onQuestionSetSelected = onQuestionSetSelected;
             this.onBackRequested = onBackRequested;
     }
 
@@ -53,9 +53,9 @@ export class QuestionCategoryView {
     }
 
     private createQuestionCategoryButtons(): string {
-        return this.learningField.categories.map((questionCategory) => `
-            <button class="selection-button" type="button" data-question-category-id="${questionCategory.id}">
-                ${questionCategory.label}
+        return this.learningField.questionSets.map((questionSet) => `
+            <button class="selection-button" type="button" data-question-category-id="${questionSet.category.id}">
+                ${questionSet.category.label}
             </button>
         `).join('');
     }
@@ -65,21 +65,21 @@ export class QuestionCategoryView {
 
         questionCategoryButtons.forEach((questionCategoryButton) => {
             questionCategoryButton.addEventListener('click', () => {
-                const selectedQuestionCategory = this.findQuestionCategory(questionCategoryButton.dataset.questionCategoryId);
+                const selectedQuestionSet = this.findQuestionSet(questionCategoryButton.dataset.questionCategoryId);
 
-                this.onQuestionCategorySelected(selectedQuestionCategory);
+                this.onQuestionSetSelected(selectedQuestionSet);
             });
         });
     }
 
-    private findQuestionCategory(questionCategoryId: string | undefined): QuestionCategory {
-        const questionCategory = this.learningField.categories.find((category) => category.id === questionCategoryId);
+    private findQuestionSet(questionCategoryId: string | undefined): QuestionSet {
+        const questionSet = this.learningField.questionSets.find((set) => set.category.id === questionCategoryId);
 
-        if (questionCategory === undefined) {
-            throw new Error('Die ausgewählte Fragenkategorie wurde nicht gefunden.')
+        if (questionSet === undefined) {
+            throw new Error('Der ausgewählte Fragenbestand wurde nicht gefunden.')
         }
 
-        return questionCategory;
+        return questionSet;
     }
 
     private initializeNavigation(questionCategoryElement: HTMLElement) {

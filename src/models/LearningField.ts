@@ -1,4 +1,4 @@
-import type { QuestionCategory } from "./QuestionCategory.ts";
+import type { QuestionSet } from "./QuestionSet.ts";
 
 export type LearningFieldId =
     'lf-01'
@@ -11,5 +11,5 @@ export type LearningFieldId =
 export interface LearningField {
     id: LearningFieldId;
     label: string;
-    categories: readonly QuestionCategory[];
+    questionSets: readonly QuestionSet[];
 }

@@ -1,18 +1,18 @@
 import type { LearningField } from "../models/LearningField.ts";
-import type { QuestionCategory } from "../models/QuestionCategory.ts";
+import type { QuestionSet } from "../models/QuestionSet.ts";
 
 export class SelectionSummaryView {
     private readonly learningField: LearningField;
-    private readonly questionCategory: QuestionCategory;
+    private readonly questionSet: QuestionSet;
     private readonly onBackRequested: () => void;
 
     public constructor(
         learningField: LearningField,
-        questionCategory: QuestionCategory,
+        questionSet: QuestionSet,
         onBackRequested: () => void
         ) {
             this.learningField = learningField;
-            this.questionCategory = questionCategory;
+            this.questionSet = questionSet;
             this.onBackRequested = onBackRequested;
     }
 
@@ -30,11 +30,12 @@ export class SelectionSummaryView {
                 <h1>Auswahl übernommen</h1>
                 
                 <p>
-                    ${this.learningField.label}<br>
-                    ${this.questionCategory.label}
-                </p>
-            </section>
-        
+                    ${this.learningField.label} - ${this.questionSet.category.label}<br><br>
+                    ${this.questionSet.questionFiles.length} zugeordnete Fragendatei(en):<br>  
+                    ${this.createQuestionFileList()}                  
+                </p>       
+            </section>         
+            
             <div class="selection-actions" aria-hidden="true"></div>
         
             <footer class="navigation-section">
@@ -47,6 +48,12 @@ export class SelectionSummaryView {
         this.initializeNavigation(selectionSummaryElement);
 
         return selectionSummaryElement;
+    }
+
+    private createQuestionFileList(): string {
+        return this.questionSet.questionFiles.map((questionFile) => `
+            <code>${questionFile}</code><br>
+        `).join('');
     }
 
     private initializeNavigation(selectionSummaryElement: HTMLElement): void {

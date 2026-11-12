@@ -244,6 +244,18 @@ button {
   padding: 10px 16px;
 }
 
+.question-file-list {
+  margin: 0 0 24px;
+  padding-left: 24px;
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.question-file-list code {
+  color: var(--secondary-text-color);
+  overflow-wrap: anywhere;
+}
+
 @media (min-width: 701px) {
   .main-menu,
   .content-view {
