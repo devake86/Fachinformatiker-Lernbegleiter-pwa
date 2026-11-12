@@ -29,9 +29,3 @@ export const CODE_CATEGORY: QuestionCategory = {
     id: 'code',
     label: 'Codeausschnitte'
 };
-
-export const COMMON_CATEGORIES: readonly QuestionCategory[] = [
-    FACTS_CATEGORY,
-    TERMS_CATEGORY,
-    ABBREVIATIONS_CATEGORY
-];

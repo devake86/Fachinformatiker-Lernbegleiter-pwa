@@ -1,5 +1,6 @@
 import type { LearningField } from "../models/LearningField.ts";
 import type { QuestionSet } from "../models/QuestionSet.ts";
+import { APP_VERSION } from "../config/AppConfig.ts";
 
 export class QuestionCategoryView {
     private readonly learningField: LearningField;
@@ -23,7 +24,7 @@ export class QuestionCategoryView {
 
         questionCategoryElement.innerHTML = `
             <header class="app-header">
-                <span class="version-label">v0.3.0-dev</span>
+                <span class="version-label">${APP_VERSION}</span>
             </header>
         
             <section class="content-header">

@@ -6,10 +6,12 @@ import type { QuestionSet } from "../models/QuestionSet.ts";
 import { LEARNING_FIELDS } from "../data/LearningFieldCatalog.ts";
 import type { LearningField } from "../models/LearningField.ts";
 import { ThemeService } from '../services/ThemeService.ts';
+import { QuestionLoader } from "../services/QuestionLoader.ts";
 
 export class App {
     private readonly appContainer: HTMLDivElement;
     private readonly themeService: ThemeService;
+    private readonly questionLoader: QuestionLoader;
 
     public constructor() {
         const appElement = document.querySelector<HTMLDivElement>('#app');
@@ -20,6 +22,7 @@ export class App {
 
         this.appContainer = appElement;
         this.themeService = new ThemeService();
+        this.questionLoader = new QuestionLoader();
     }
 
     public start(): void {
@@ -63,6 +66,11 @@ export class App {
         const selectionSummaryView = new SelectionSummaryView(
             learningField,
             questionSet,
+            async () => {
+                const loadedQuestions = await this.questionLoader.loadQuestionFiles(questionSet.questionFiles);
+
+                return loadedQuestions.length;
+            },
             () => this.showQuestionCategorySelection(learningField),
         );
 

@@ -1,4 +1,5 @@
 import type { Theme } from '../services/ThemeService.ts'; // Importiert nur den Typ Theme, nicht den zur Laufzeit verwendeten ThemeService
+import { APP_VERSION } from "../config/AppConfig.ts";
 
 export class MainMenuView {
 
@@ -24,7 +25,7 @@ export class MainMenuView {
         // Fügt dem erzeugten main-Element die Struktur des Hauptmenüs hinzu
         mainMenuElement.innerHTML = `
             <header class="app-header">
-                <span class="version-Label">v0.3.0-dev</span>
+                <span class="version-Label">${APP_VERSION}</span>
             </header>
             
             <section class="title-section">

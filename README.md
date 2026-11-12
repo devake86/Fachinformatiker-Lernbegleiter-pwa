@@ -12,6 +12,17 @@ https://devake86.github.io/Fachinformatiker-Lernbegleiter-pwa/
 
 ## Aktueller Stand
 
+### v0.4-dev
+
+Funktionsfähiges Laden und Validieren der vorhandenen Fragenbestände.
+
+- **M4:** TypeScript-Datenmodelle für Fragen und Antworten
+- asynchrones Laden einzelner und mehrerer JSON-Fragendateien
+- Zusammenführung mehrerer Dateien zu einer gemeinsamen Fragenliste
+- Prüfung der JSON-Syntax und der erwarteten Datenstruktur
+- verständliche Fehlerbehandlung bei fehlenden oder ungültigen Dateien
+- zentrale Versionsanzeige
+
 ### v0.3-dev
 
 Zentrale Verwaltung der vorhandenen Fragenbestände.
@@ -41,7 +52,6 @@ Früher Prototyp der Benutzeroberfläche und Projektgrundlage.
 
 ## Geplante Funktionen
 
-- Laden und Validieren der vorhandenen Fragen
 - gemischte Quizrunden
 - lokale Speicherung des Lernfortschritts
 - Wiederholung falsch beantworteter Fragen

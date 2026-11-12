@@ -1,4 +1,5 @@
 import type { LearningField } from "../models/LearningField.ts";
+import { APP_VERSION } from "../config/AppConfig.ts";
 
 export class LearningFieldView {
     private readonly learningFields: readonly LearningField[];
@@ -22,7 +23,7 @@ export class LearningFieldView {
 
         learningFieldElement.innerHTML = `
             <header class="app-header">
-                <span class="version-label">v0.3.0-dev</span>
+                <span class="version-label">${APP_VERSION}</span>
             </header>
         
             <section class="content-header">
