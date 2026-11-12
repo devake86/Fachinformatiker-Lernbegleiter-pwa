@@ -24,7 +24,7 @@ export class MainMenuView {
         // Fügt dem erzeugten main-Element die Struktur des Hauptmenüs hinzu
         mainMenuElement.innerHTML = `
             <header class="app-header">
-                <span class="version-Label">v0.2.0-dev</span>
+                <span class="version-Label">v0.3.0-dev</span>
             </header>
             
             <section class="title-section">
