@@ -1,11 +1,16 @@
-import type { QuizAnswer } from "../models/QuizAnswer.ts";
-import type { QuizQuestion } from "../models/QuizQuestion.ts";
+import type { QuizAnswer } from '../models/QuizAnswer.ts';
+import type { QuizQuestion } from '../models/QuizQuestion.ts';
+import type { QuestionPool } from '../models/QuestionPool.ts';
 
 export class QuestionLoader {
-    public async loadQuestionFiles(questionFiles: readonly string[]): Promise<QuizQuestion[]> { // Nach erfolgreichem Laden steht eine Liste aus Quizfragen bereit
-        const loadedQuestionLists = await Promise.all(questionFiles.map((questionFile) => this.loadQuestionFile(questionFile))); // Warten bis alle Ladevorgänge abgeschlossen sind
+    public async loadQuestionPools(questionFiles: readonly string[]): Promise<QuestionPool[]> {
+        return Promise.all(questionFiles.map(async (questionFile) => ({questionFile, questions: await this.loadQuestionFile(questionFile)}))); // Lädt alle Fragendateien parallel und ordnet jeder Datei die geladenen Fragen als eigenen Fragenpool zu
+    }
 
-        return loadedQuestionLists.flat(); // Aus Liste mit Listen der Fragen aus den einzelnen Dateien eine gemeinsame Liste erzeugen
+    public async loadQuestionFiles(questionFiles: readonly string[]): Promise<QuizQuestion[]> { // Nach erfolgreichem Laden steht eine Liste aus Quizfragen bereit
+        const questionPools = await this.loadQuestionPools(questionFiles);
+
+        return questionPools.flatMap((questionPool) => questionPool.questions); // Aus jeden Pool die Fragenliste nehmen und alle Listen verbinden
     }
 
     private async loadQuestionFile(questionFile: string): Promise<QuizQuestion[]> {

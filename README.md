@@ -12,6 +12,19 @@ https://devake86.github.io/Fachinformatiker-Lernbegleiter-pwa/
 
 ## Aktueller Stand
 
+### v0.5-dev
+
+Erzeugung gemischter und begrenzter Quizrunden aus den geladenen Fragenbeständen.
+
+- **M5:** QuizEngine und Rundenerzeugung
+- gleichmäßige Round-Robin-Auswahl aus mehreren Fragenpools
+- Begrenzung auf maximal 20 verfügbare Fragen
+- Unterstützung kleiner Fragenbestände mit weniger als 20 Fragen
+- Vermeidung doppelter Fragen innerhalb einer Runde
+- Erhalt der unveränderten Ausgangspools
+- automatisierte Tests für Array-Mischung, Rundenerzeugung und QuizEngine
+- Ausführung der Tests vor dem GitHub-Pages-Deployment
+
 ### v0.4-dev
 
 Funktionsfähiges Laden und Validieren der vorhandenen Fragenbestände.
@@ -52,7 +65,7 @@ Früher Prototyp der Benutzeroberfläche und Projektgrundlage.
 
 ## Geplante Funktionen
 
-- gemischte Quizrunden
+- bedienbare Quizansicht mit Antwortauswertung
 - lokale Speicherung des Lernfortschritts
 - Wiederholung falsch beantworteter Fragen
 - separates Fehlertraining

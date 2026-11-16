@@ -1,5 +1,5 @@
-import type { LearningField } from "../models/LearningField.ts";
-import { APP_VERSION } from "../config/AppConfig.ts";
+import type { LearningField } from '../models/LearningField.ts';
+import { APP_VERSION } from '../config/AppConfig.ts';
 
 export class LearningFieldView {
     private readonly learningFields: readonly LearningField[];

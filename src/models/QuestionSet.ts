@@ -1,4 +1,4 @@
-import type { QuestionCategory } from "./QuestionCategory.ts";
+import type { QuestionCategory } from './QuestionCategory.ts';
 
 export interface QuestionSet {
     category: QuestionCategory;

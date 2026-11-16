@@ -1,4 +1,4 @@
-import type { QuestionCategory } from "../models/QuestionCategory.ts";
+import type { QuestionCategory } from '../models/QuestionCategory.ts';
 
 export const FACTS_CATEGORY: QuestionCategory = {
     id: 'facts',

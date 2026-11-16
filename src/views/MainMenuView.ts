@@ -1,5 +1,5 @@
 import type { Theme } from '../services/ThemeService.ts'; // Importiert nur den Typ Theme, nicht den zur Laufzeit verwendeten ThemeService
-import { APP_VERSION } from "../config/AppConfig.ts";
+import { APP_VERSION } from '../config/AppConfig.ts';
 
 export class MainMenuView {
 

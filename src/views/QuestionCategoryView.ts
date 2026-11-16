@@ -1,6 +1,6 @@
-import type { LearningField } from "../models/LearningField.ts";
-import type { QuestionSet } from "../models/QuestionSet.ts";
-import { APP_VERSION } from "../config/AppConfig.ts";
+import type { LearningField } from '../models/LearningField.ts';
+import type { QuestionSet } from '../models/QuestionSet.ts';
+import { APP_VERSION } from '../config/AppConfig.ts';
 
 export class QuestionCategoryView {
     private readonly learningField: LearningField;

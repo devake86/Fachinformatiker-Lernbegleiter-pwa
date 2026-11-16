@@ -1,17 +1,18 @@
-import type { LearningField } from "../models/LearningField.ts";
-import type { QuestionSet } from "../models/QuestionSet.ts";
-import { APP_VERSION } from "../config/AppConfig.ts";
+import type { LearningField } from '../models/LearningField.ts';
+import type { QuestionSet } from '../models/QuestionSet.ts';
+import { APP_VERSION } from '../config/AppConfig.ts';
+import type { QuizRoundTestResult } from '../models/QuizRoundTestResult.ts';
 
 export class SelectionSummaryView {
     private readonly learningField: LearningField;
     private readonly questionSet: QuestionSet;
-    private readonly onLoadRequested: () => Promise<number>;
+    private readonly onLoadRequested: () => Promise<QuizRoundTestResult>;
     private readonly onBackRequested: () => void;
 
     public constructor(
         learningField: LearningField,
         questionSet: QuestionSet,
-        onLoadRequested: () => Promise<number>,
+        onLoadRequested: () => Promise<QuizRoundTestResult>,
         onBackRequested: () => void
         ) {
             this.learningField = learningField;
@@ -42,10 +43,12 @@ export class SelectionSummaryView {
             
             <div class="selection-actions">
                 <button class="selection-button" type="button" data-action="load-questions">
-                    Fragen laden
+                    Quizrunde erzeugen
                 </button>
                 
                 <p class="load-result" data-load-result aria-live="polite"></p>
+                
+                <div class="round-test-result" data-round-test-result aria-live="polite"></div>
             </div>
         
             <footer class="navigation-section">
@@ -71,8 +74,9 @@ export class SelectionSummaryView {
     private initializeQuestionLoading(selectionSummaryElement: HTMLElement): void {
         const loadButton = selectionSummaryElement.querySelector<HTMLButtonElement>('[data-action="load-questions"]');
         const loadResult = selectionSummaryElement.querySelector<HTMLParagraphElement>('[data-load-result]');
+        const roundTestResult = selectionSummaryElement.querySelector<HTMLDivElement>('[data-round-test-result]');
 
-        if (loadButton === null || loadResult === null) {
+        if (loadButton === null || loadResult === null || roundTestResult === null) {
             throw new Error('Die Bedienelemente zum Laden der Fragen wurden nicht gefunden.')
         }
 
@@ -81,13 +85,42 @@ export class SelectionSummaryView {
             loadResult.textContent = 'Fragen werden geladen...';
 
             try {
-                const loadedQuestionCount = await this.onLoadRequested();
+                const testResult = await this.onLoadRequested();
+                const questionIds = testResult.roundQuestions.map((question) => question.id);
+                const uniqueQuestionIdCount = new Set(questionIds).size;
+                const containsDuplicateQuestionIds = uniqueQuestionIdCount !== questionIds.length;
+                const originalPoolSizes = testResult.originalPoolSizes.join(', ');
+                const remainingPoolSizes = testResult.remainingPoolSizes.join(', ');
 
-                loadResult.textContent = `${loadedQuestionCount} Fragen wurden erfolgreich geladen.`;
+                loadResult.textContent = `${testResult.loadedQuestionCount} Fragen geladen, ${testResult.roundQuestions.length} Fragen ausgewählt.`;
+
+                roundTestResult.innerHTML = `
+                    <p>
+                        Doppelte Fragen-IDs:
+                        <strong>
+                            ${containsDuplicateQuestionIds ? 'Ja' : 'Nein'}
+                        </strong>
+                    </p>
+                    
+                    <p>
+                        Poolgrößen vor Rundenerzeugung:
+                        <code>${originalPoolSizes}</code>
+                    </p>
+                    
+                    <p>
+                        Poolgrößen nach Rundenerzeugung:
+                        <code>${remainingPoolSizes}</code>
+                    </p>
+                    
+                    <p>Ausgewählte Fragen-IDs:</p>
+                
+                    <code>${questionIds.join('<br>')}</code>
+                `;
             } catch (error) {
-                const errorMessage = error instanceof Error ? error.message : 'Beim Laden ist ein unbekannter Fehler aufgetreten.';
+                const errorMessage = error instanceof Error ? error.message : 'Beim Erzeugen der Quizrunde ist ein unbekannter Fehler aufgetreten.';
 
                 loadResult.textContent = errorMessage;
+                roundTestResult.replaceChildren();
             } finally {
                 loadButton.disabled = false;
             }

@@ -1,17 +1,20 @@
 import { MainMenuView } from '../views/MainMenuView.ts';
 import { LearningFieldView } from '../views/LearningFieldView.ts';
-import { QuestionCategoryView } from "../views/QuestionCategoryView.ts";
-import { SelectionSummaryView } from "../views/SelectionSummaryView.ts";
-import type { QuestionSet } from "../models/QuestionSet.ts";
-import { LEARNING_FIELDS } from "../data/LearningFieldCatalog.ts";
-import type { LearningField } from "../models/LearningField.ts";
+import { QuestionCategoryView } from '../views/QuestionCategoryView.ts';
+import { SelectionSummaryView } from '../views/SelectionSummaryView.ts';
+import type { QuestionSet } from '../models/QuestionSet.ts';
+import { LEARNING_FIELDS } from '../data/LearningFieldCatalog.ts';
+import type { LearningField } from '../models/LearningField.ts';
 import { ThemeService } from '../services/ThemeService.ts';
-import { QuestionLoader } from "../services/QuestionLoader.ts";
+import { QuestionLoader } from '../services/QuestionLoader.ts';
+import { QuizRoundFactory } from '../services/QuizRoundFactory.ts';
+import type { QuizRoundTestResult } from '../models/QuizRoundTestResult.ts';
 
 export class App {
     private readonly appContainer: HTMLDivElement;
     private readonly themeService: ThemeService;
     private readonly questionLoader: QuestionLoader;
+    private readonly quizRoundFactory: QuizRoundFactory;
 
     public constructor() {
         const appElement = document.querySelector<HTMLDivElement>('#app');
@@ -23,6 +26,7 @@ export class App {
         this.appContainer = appElement;
         this.themeService = new ThemeService();
         this.questionLoader = new QuestionLoader();
+        this.quizRoundFactory = new QuizRoundFactory();
     }
 
     public start(): void {
@@ -66,10 +70,14 @@ export class App {
         const selectionSummaryView = new SelectionSummaryView(
             learningField,
             questionSet,
-            async () => {
-                const loadedQuestions = await this.questionLoader.loadQuestionFiles(questionSet.questionFiles);
+            async (): Promise<QuizRoundTestResult> => {
+                const questionPools = await this.questionLoader.loadQuestionPools(questionSet.questionFiles);
+                const loadedQuestionCount = questionPools.reduce((totalQuestionCount, questionPool) => totalQuestionCount + questionPool.questions.length, 0); // Gesamtsumme der Pools ermitteln
+                const originalPoolSizes = questionPools.map((questionPool) => questionPool.questions.length);
+                const roundQuestions = this.quizRoundFactory.createRound(questionPools);
+                const remainingPoolSizes = questionPools.map((questionPool) => questionPool.questions.length);
 
-                return loadedQuestions.length;
+                return {loadedQuestionCount, roundQuestions, originalPoolSizes, remainingPoolSizes};
             },
             () => this.showQuestionCategorySelection(learningField),
         );

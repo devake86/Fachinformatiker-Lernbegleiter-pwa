@@ -1,4 +1,4 @@
-import type { QuestionSet } from "./QuestionSet.ts";
+import type { QuestionSet } from './QuestionSet.ts';
 
 export type LearningFieldId =
     'lf-01'
