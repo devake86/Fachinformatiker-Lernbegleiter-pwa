@@ -9,6 +9,10 @@ import { ThemeService } from '../services/ThemeService.ts';
 import { QuestionLoader } from '../services/QuestionLoader.ts';
 import { QuizRoundFactory } from '../services/QuizRoundFactory.ts';
 import type { QuizRoundTestResult } from '../models/QuizRoundTestResult.ts';
+import { QuizView } from '../views/QuizView.ts';
+import { QuizEngine } from '../services/QuizEngine.ts';
+import { QuizResultView } from '../views/QuizResultView.ts';
+import { QUIZ_ROUND_SIZE } from '../config/AppConfig.ts';
 
 export class App {
     private readonly appContainer: HTMLDivElement;
@@ -79,9 +83,31 @@ export class App {
 
                 return {loadedQuestionCount, roundQuestions, originalPoolSizes, remainingPoolSizes};
             },
-            () => this.showQuestionCategorySelection(learningField),
+            async () => await this.showQuiz(learningField, questionSet),
+            () => this.showQuestionCategorySelection(learningField)
         );
 
         this.appContainer.replaceChildren(selectionSummaryView.createElement());
+    }
+
+    private async showQuiz(learningField: LearningField, questionSet: QuestionSet): Promise<void> {
+        const questionPools = await this.questionLoader.loadQuestionPools(questionSet.questionFiles);
+        const roundQuestions = this.quizRoundFactory.createRound(questionPools, QUIZ_ROUND_SIZE);
+        const quizEngine = new QuizEngine(roundQuestions);
+        const quizView = new QuizView(
+            quizEngine,
+            learningField.label,
+            questionSet.category.label,
+            () => this.showQuestionCategorySelection(learningField),
+            (score, questionCount) => this.showQuizResult(learningField, score, questionCount)
+        );
+
+        this.appContainer.replaceChildren(quizView.createElement());
+    }
+
+    private showQuizResult(learningField: LearningField, score: number, questionCount: number): void {
+        const quizResultView = new QuizResultView(score, questionCount,() => this.showQuestionCategorySelection(learningField));
+
+        this.appContainer.replaceChildren(quizResultView.createElement());
     }
 }

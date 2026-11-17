@@ -7,17 +7,20 @@ export class SelectionSummaryView {
     private readonly learningField: LearningField;
     private readonly questionSet: QuestionSet;
     private readonly onLoadRequested: () => Promise<QuizRoundTestResult>;
+    private readonly onQuizStartRequested: () => Promise<void>;
     private readonly onBackRequested: () => void;
 
     public constructor(
         learningField: LearningField,
         questionSet: QuestionSet,
         onLoadRequested: () => Promise<QuizRoundTestResult>,
+        onQuizStartRequested: () => Promise<void>,
         onBackRequested: () => void
         ) {
             this.learningField = learningField;
             this.questionSet = questionSet;
             this.onLoadRequested = onLoadRequested;
+            this.onQuizStartRequested = onQuizStartRequested;
             this.onBackRequested = onBackRequested;
     }
 
@@ -46,6 +49,10 @@ export class SelectionSummaryView {
                     Quizrunde erzeugen
                 </button>
                 
+                <button class="selection-button" type="button" data-action="start-quiz">
+                    Quiz starten
+                </button>
+                
                 <p class="load-result" data-load-result aria-live="polite"></p>
                 
                 <div class="round-test-result" data-round-test-result aria-live="polite"></div>
@@ -59,7 +66,7 @@ export class SelectionSummaryView {
         `;
 
         this.initializeQuestionLoading(selectionSummaryElement);
-
+        this.initializeQuizStart(selectionSummaryElement);
         this.initializeNavigation(selectionSummaryElement);
 
         return selectionSummaryElement;
@@ -125,6 +132,32 @@ export class SelectionSummaryView {
                 loadButton.disabled = false;
             }
         });
+    }
+
+    private initializeQuizStart(selectionSummaryElement: HTMLElement): void {
+        const startQuizButton = selectionSummaryElement.querySelector<HTMLButtonElement>('[data-action="start-quiz"]');
+        const loadResult = selectionSummaryElement.querySelector<HTMLParagraphElement>('[data-load-result]');
+
+        if (startQuizButton === null || loadResult === null) {
+            throw new Error('Die Bedienelemente zum Starten des Quiz wurden nicht gefunden.');
+        }
+
+        startQuizButton.addEventListener('click', async () => {
+                startQuizButton.disabled = true;
+
+                loadResult.textContent = 'Quiz wird vorbereitet...';
+
+                try {
+                    await this.onQuizStartRequested();
+                } catch (error) {
+                    const errorMessage = error instanceof Error ? error.message : 'Das Quiz konnte nicht gestartet werden.';
+
+                    loadResult.textContent = errorMessage;
+
+                    startQuizButton.disabled = false;
+                }
+            }
+        );
     }
 
     private initializeNavigation(selectionSummaryElement: HTMLElement): void {

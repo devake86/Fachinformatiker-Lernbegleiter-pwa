@@ -47,7 +47,6 @@ export class QuestionCategoryView {
         `;
 
         this.initializeQuestionCategoryButtons(questionCategoryElement);
-
         this.initializeNavigation(questionCategoryElement);
 
         return questionCategoryElement;

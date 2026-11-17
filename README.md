@@ -12,6 +12,22 @@ https://devake86.github.io/Fachinformatiker-Lernbegleiter-pwa/
 
 ## Aktueller Stand
 
+### v0.6-dev
+
+Bedienbarer Quizdurchlauf mit Antwortauswertung und Rundenergebnis.
+
+- **M6:** Quizansicht und vollständiger Quizdurchlauf
+- Test Quizrunden mit drei zufällig ausgewählten Fragen
+- gemischte Reihenfolge der Antwortmöglichkeiten
+- Auswahl und Bestätigung einer Antwort
+- farbliche Kennzeichnung richtiger und falsch gewählter Antworten
+- Anzeige der zugehörigen Erklärung
+- Fortschrittsanzeige und Fragen-ID
+- Navigation zwischen den Fragen
+- Ergebnisanzeige am Ende der Quizrunde
+- Abbruch und Rückkehr zur Fragenkategorieauswahl
+- manuelle Akzeptanztests sowie automatisierte Regressionstests der Kernlogik
+
 ### v0.5-dev
 
 Erzeugung gemischter und begrenzter Quizrunden aus den geladenen Fragenbeständen.
@@ -65,7 +81,6 @@ Früher Prototyp der Benutzeroberfläche und Projektgrundlage.
 
 ## Geplante Funktionen
 
-- bedienbare Quizansicht mit Antwortauswertung
 - lokale Speicherung des Lernfortschritts
 - Wiederholung falsch beantworteter Fragen
 - separates Fehlertraining
